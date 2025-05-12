@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Предсказания донорской активности</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 40px;
+            color: #333;
+        }
+        h1, h2, h3 { text-align: center; color: #2c3e50; }
+        form {
+            max-width: 500px;
+            margin: auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        label { display: block; margin-top: 15px; font-weight: bold; }
+        input[type="text"], select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+    display: block;
+    margin-top: 20px;
+    width: 100%;
+    background-color: #3498db;
+    color: white;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+        button:hover { background-color: #2980b9; }
+        .results, .images {
+            max-width: 700px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        ul { list-style-type: none; padding: 0; }
+        li { padding: 5px 0; }
+        img { display: block; margin: 20px auto; max-width: 100%; height: auto; border-radius: 8px; }
+    </style>
+</head>
+<body>
+    <h1>Предсказание донорской активности</h1>
+
+    <form method="POST" action="/predict">
+        <label>Recency (месяцев):</label>
+        <input type="text" name="recency" required>
+
+        <label>Frequency (раз):</label>
+        <input type="text" name="frequency" required>
+
+        <label>Monetary (мл крови):</label>
+        <input type="text" name="monetary" required>
+
+        <label>Time (месяцев):</label>
+        <input type="text" name="time" required>
+
+        <label>Выберите модель:</label>
+        <select name="model" required>
+            <option value="linear_regression">Линейная регрессия</option>
+            <option value="logistic_regression">Логистическая регрессия</option>
+            <option value="decision_tree">Дерево решений</option>
+            <option value="random_forest">Случайный лес</option>
+            <option value="naive_bayes">Наивный Байес</option>
+            <option value="knn">K-ближайших соседей</option>
+        </select>
+
+        <button type="submit">Предсказать</button>
+    </form>
+
+    {% if result %}
+    <div class="results">
+        <h2>Результат предсказания:</h2>
+        <ul>
+            <li><strong>Модель:</strong> {{ result['Модель'] }}</li>
+            <li><strong>Предсказание:</strong> {{ result['Результат'] }}</li>
+        </ul>
+    </div>
+
+    <div class="images">
+        <h3>График линейной регрессии:</h3>
+        <img src="data:image/png;base64,{{ img }}" alt="График линейной регрессии">
+
+        <h3>Кластеризация:</h3>
+        <img src="data:image/png;base64,{{ cluster_img }}" alt="График кластеризации">
+    </div>
+    {% endif %}
+</body>
+</html>

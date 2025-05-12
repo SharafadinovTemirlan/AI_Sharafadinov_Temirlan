@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Результаты</title>
+</head>
+<body>
+    <h1>Результаты предсказания</h1>
+    <ul>
+        {% for model, prediction in result.items() %}
+            <li><strong>{{ model }}:</strong> {{ prediction }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>График линейной регрессии</h2>
+    <img src="data:image/png;base64,{{ img }}" alt="График линейной регрессии">
+
+    <h2>График кластеризации</h2>
+    <img src="data:image/png;base64,{{ cluster_img }}" alt="График кластеризации">
+
+    <br><br>
+    <a href="/">Вернуться назад</a>
+</body>
+</html>
